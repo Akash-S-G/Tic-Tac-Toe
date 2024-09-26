@@ -82,3 +82,26 @@ nav ul{
     width: 0;
     transition: width 1s ease-in-out;
 }
+
+@media screen and (max-width: 900px){
+   .gamecontainer{
+    flex-direction: column;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+   .gameInfo{
+    margin-top: 60px;
+    font-size: 3rem;
+   }
+   .container{
+    display: grid;
+    grid-template-rows: repeat(3,20vw);
+    grid-template-columns: repeat(3,20vw);
+   }
+    #reset{
+        padding: 0 20px ;
+
+    }
+}
