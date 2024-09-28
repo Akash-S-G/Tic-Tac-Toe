@@ -3,74 +3,76 @@ let gamoveraudio = new Audio("gameover.mp3");
 let turnaudio = new Audio("ting.mp3");
 let musicr = new Audio("music.mp3");
 let turn = "X";
-let gameover=false;
-
+let gameover = false;
+let count = 0;
 const changeTurn = () => {
 
     return turn === "X" ? "O" : "X";
 }
 const checkwin = () => {
-    let wins=[
-        [0 ,1, 2],
-        [3 ,4, 5],
-        [6 ,7, 8],
-        [1 ,4, 7],
-        [2 ,5, 8],
-        [0 ,4, 8],
-        [2 ,4, 6],
-     
-    ]
-    let boxtext =document.querySelectorAll(".boxtext");
-   
-    wins.forEach(e =>{
-     
-        if((boxtext[e[0]].innerText===boxtext[e[1]].innerText) && (boxtext[e[2]].innerText===boxtext[e[1]].innerText)&&(boxtext[e[0]].innerText!=='') )
-       {
-         document.getElementsByClassName("info")[0].innerText =boxtext[e[0]].innerText +" Won!";
-         gameover=true;
-         game=0;
-         document.getElementById('img1').style.width='200px';
+    let wins = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
 
-       }
-       if(count==9)
-        {
-            document.getElementsByClassName("info")[0].innerText ="Game Draw!";
+    ]
+    let boxtext = document.querySelectorAll(".boxtext");
+
+    wins.forEach(e => {
+
+        if ((boxtext[e[0]].innerText === boxtext[e[1]].innerText) && (boxtext[e[2]].innerText === boxtext[e[1]].innerText) && (boxtext[e[0]].innerText !== '')) {
+            document.getElementsByClassName("info")[0].innerText = boxtext[e[0]].innerText + " Won!";
+            gameover = true;
+
+            document.getElementById('img1').style.width = '200px';
+
+        }
+        if (count == 9 && !gameover) {
+            document.getElementsByClassName("info")[0].innerText = "Game Drawn!";
+            console.log(document.getElementsByClassName("info")[0].innerText);
+            gameover = true;
         }
 
     })
 
 }
 // Reset Button
-let rest=document.getElementById("reset");
-rest.addEventListener("click",()=>{
-    let boxtext =document.querySelectorAll(".boxtext");
-    Array.from(boxtext).forEach(e=>{
-        e.innerText='';
+let rest = document.getElementById("reset");
+rest.addEventListener("click", () => {
+    let boxtext = document.querySelectorAll(".boxtext");
+    Array.from(boxtext).forEach(e => {
+        e.innerText = '';
     })
-    document.getElementById('img1').style.width='0px';
-    turn='X';
-    gameover=false;
+    document.getElementById('img1').style.width = '0px';
+    turn = 'X';
+    gameover = false;
     console.log("Reset Successful!");
+    document.getElementsByClassName("info")[0].innerText = "Turn for  " + turn;
+    count = 0;
 })
-let count=0;
+
 
 
 //Game Logic
 let boxes = document.getElementsByClassName("box");
 Array.from(boxes).forEach(element => {
-    let boxtext =element.querySelector(".boxtext");
-   
+    let boxtext = element.querySelector(".boxtext");
+
     element.addEventListener("click", () => {
-        if (boxtext.innerText ==='') {
-            boxtext.innerText=turn;
-            turn=changeTurn();
+        if (boxtext.innerText === '') {
+            boxtext.innerText = turn;
+            turn = changeTurn();
             turnaudio.play();
+            count = count + 1;
             checkwin();
-           count=count+1;
-            if(!gameover)
-           document.getElementsByClassName("info")[0].innerText ="Turn for  "+turn;
-     
+            if (!gameover)
+                document.getElementsByClassName("info")[0].innerText = "Turn for  " + turn;
+
         }
-      
+
     })
 })
